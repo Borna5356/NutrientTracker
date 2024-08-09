@@ -53,6 +53,9 @@ def validate_user(user, password):
     return hashed_password == correct_password
 
 def hash_password(password):
+    """
+    Helper function to hash a given password to be added to the table
+    """
     hashing = hashlib.sha256()
     encoded_string = bytes(password, encoding="utf-8")
     hashing.update(encoded_string)
@@ -63,10 +66,23 @@ def hash_password(password):
         hashed_password += string
     return hashed_password
 
+def delete_user(username, password):
+    """
+    Deletes a users information from the table
+    """
+    hashed_password = hash_password(password)
+    query = """
+    DELETE FROM users WHERE username=%s AND password=%s
+    """
+    values = [username, hashed_password]
+    cursor.execute(query, values)
+    conn.commit()
+
 create_user_table()
 #create_user("Boobby", "test", 32, 'f', 324)
 user = get_user("Boobby")
-print(validate_user(user, "test"))
+#print(validate_user(user, "test"))
+delete_user("Boobby", "test")
 
 
 cursor.close()
