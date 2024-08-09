@@ -24,14 +24,7 @@ def create_user(username, password, age, sex, weight):
     """
     Hashes the password entered and adds the new user to the database
     """
-    hashing = hashlib.sha256()
-    encoded_string = bytes(password, encoding="utf-8")
-    hashing.update(encoded_string)
-    hashed_password = str(hashing.digest())
-    password_array = hashed_password.split('\\')
-    hashed_password = ""
-    for string in password_array:
-        hashed_password += string
+    hashed_password = hash_password(password)
     query = """
     INSERT INTO users (username, password, age, sex, weight) 
     VALUES (%s, %s, %s, %s, %s)
@@ -55,6 +48,11 @@ def validate_user(user, password):
     """
     makes sure that the password entered is 
     """
+    hashed_password = hash_password(password)
+    correct_password = user[1]
+    return hashed_password == correct_password
+
+def hash_password(password):
     hashing = hashlib.sha256()
     encoded_string = bytes(password, encoding="utf-8")
     hashing.update(encoded_string)
@@ -63,8 +61,7 @@ def validate_user(user, password):
     hashed_password = ""
     for string in password_array:
         hashed_password += string
-    correct_password = user[1]
-    return hashed_password == correct_password
+    return hashed_password
 
 create_user_table()
 #create_user("Boobby", "test", 32, 'f', 324)
