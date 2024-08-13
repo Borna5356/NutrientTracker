@@ -28,8 +28,17 @@ def create_food(name, calories, protein, carbs, sugars, fats):
     cursor.execute(query, values)
     conn.commit()
 
+def get_food(name):
+    query = """
+    SELECT * FROM foods WHERE name=%s
+    """
+    values = [name]
+    cursor.execute(query, values)
+    conn.commit()
+    return cursor.fetchone()
 
 create_food_table()
-create_food("burger", 300, 23, 23, 34, 45)
+#create_food("burger", 300, 23, 23, 34, 45)
+print(get_food("burger"))
 cursor.close()
 conn.close()
