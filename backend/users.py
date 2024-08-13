@@ -46,7 +46,7 @@ def get_user(username):
 
 def validate_user(user, password):
     """
-    makes sure that the password entered is 
+    makes sure that the password entered is correct 
     """
     hashed_password = hash_password(password)
     correct_password = user[1]
@@ -66,6 +66,20 @@ def hash_password(password):
         hashed_password += string
     return hashed_password
 
+def change_password(username, password, newPassword):
+    user = get_user(username)
+    if (validate_user(user, password) == False):
+        return False
+    
+    hashed_password = hash_password(newPassword)
+    query = """
+    UPDATE users SET password=%s WHERE username=%s 
+    """
+    values = [hashed_password, username]
+    cursor.execute(query, values)
+    conn.commit()
+    return True
+
 def delete_user(username, password):
     """
     Deletes a users information from the table
@@ -80,9 +94,10 @@ def delete_user(username, password):
 
 create_user_table()
 #create_user("Boobby", "test", 32, 'f', 324)
+#change_password("Boobby", "test", "testing")
 user = get_user("Boobby")
-#print(validate_user(user, "test"))
-delete_user("Boobby", "test")
+print(validate_user(user, "testing"))
+delete_user("Boobby", "testing")
 
 
 cursor.close()
