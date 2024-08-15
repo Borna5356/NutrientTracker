@@ -93,11 +93,11 @@ def delete_user(username, password):
     conn.commit()
 
 create_user_table()
-#create_user("Boobby", "test", 32, 'f', 324)
+create_user("Bobby", "test", 32, 'f', 324)
 #change_password("Boobby", "test", "testing")
-user = get_user("Boobby")
-print(validate_user(user, "testing"))
-delete_user("Boobby", "testing")
+#user = get_user("Boobby")
+#print(validate_user(user, "testing"))
+#delete_user("Boobby", "testing")
 
 
 cursor.close()

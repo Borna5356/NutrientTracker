@@ -18,6 +18,15 @@ def create_calorie_tracker_table():
     cursor.execute(query)
     conn.commit()
 
-create_calorie_tracker_table()
+def add_calories(username, date, food, calories):
+    query = """
+    INSERT INTO calorie_tracker (username, date, food, calories) VALUES
+    (%s, %s, %s, %s)
+    """
+    values = [username, date, food, calories]
+    cursor.execute(query, values)
+    conn.commit()
+
+add_calories("Bobby", "02/12/2001", "burger", 300)
 cursor.close()
 conn.close()
