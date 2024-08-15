@@ -27,6 +27,14 @@ def add_calories(username, date, food, calories):
     cursor.execute(query, values)
     conn.commit()
 
-add_calories("Bobby", "02/12/2001", "burger", 300)
+def get_calories_from_user(username):
+    query = "SELECT * FROM calorie_tracker WHERE username=%s"
+    values = [username]
+    cursor.execute(query, values)
+    conn.commit()
+    return cursor.fetchall()
+
+#add_calories("Bobby", "02/12/2001", "burger", 300)
+print(get_calories_from_user("Bobby"))
 cursor.close()
 conn.close()

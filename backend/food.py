@@ -38,7 +38,7 @@ def get_food(name):
     return cursor.fetchone()
 
 create_food_table()
-#create_food("burger", 300, 23, 23, 34, 45)
-print(get_food("burger"))
+create_food("Coke", 300, 23, 23, 34, 45)
+#print(get_food("burger"))
 cursor.close()
 conn.close()
