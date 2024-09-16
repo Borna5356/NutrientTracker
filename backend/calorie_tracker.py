@@ -34,7 +34,8 @@ def get_calories_from_user(username):
     conn.commit()
     return cursor.fetchall()
 
-#add_calories("Bobby", "02/12/2001", "burger", 300)
-print(get_calories_from_user("Bobby"))
+create_calorie_tracker_table()
+add_calories("John", "02/12/2001", "Coke", 300)
+print(get_calories_from_user("John"))
 cursor.close()
 conn.close()

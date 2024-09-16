@@ -92,13 +92,17 @@ def delete_user(username, password):
     cursor.execute(query, values)
     conn.commit()
 
-create_user_table()
-create_user("John", "test", 32, 'f', 324)
-#change_password("Boobby", "test", "testing")
-#user = get_user("Boobby")
-#print(validate_user(user, "testing"))
-#delete_user("Boobby", "testing")
+def main():
+    create_user_table()
+    #create_user("John", "test", 32, 'f', 324)
+    #change_password("Boobby", "test", "testing")
+    user = print(get_user("John"))
+    #print(validate_user(user, "testing"))
+    #delete_user("Boobby", "testing")
 
 
-cursor.close()
-conn.close()
+    cursor.close()
+    conn.close()
+
+if (__name__ == "__main__"):
+    main()
