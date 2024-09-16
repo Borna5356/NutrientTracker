@@ -19,6 +19,8 @@ def create_food_table():
     cursor.execute(query)
     conn.commit()
 
+
+
 def create_food(name, calories, protein, carbs, sugars, fats):
     query = """
     INSERT INTO foods (name, total_calories, protein, carbs, sugars, fats) VALUES
@@ -28,8 +30,16 @@ def create_food(name, calories, protein, carbs, sugars, fats):
     cursor.execute(query, values)
     conn.commit()
 
-#gets a specific food from the database using the name
+def get_all_food():
+    #gets all the food from the foods table
+    query = "SELECT * FROM foods"
+    cursor.execute(query)
+    conn.commit()
+    return cursor.fetchall()
+
+
 def get_food(name):
+    #gets a specific food from the database using the name
     query = """
     SELECT * FROM foods WHERE name=%s
     """
@@ -39,9 +49,7 @@ def get_food(name):
     return cursor.fetchone()
 
 def main():
-    create_food_table()
-    create_food("Coke", 300, 23, 23, 34, 45)
-    #print(get_food("burger"))
+    print(get_all_food())
     cursor.close()
     conn.close()
 
