@@ -13,8 +13,8 @@ def get_users():
     username = request.args.get("username")
     user = users.get_user(username)
     if (user == None):
-        return f"{user} account has not been created"
-    return {"Name": user[0], "Password": user[1], "Age": user[2], "Sex": user[3], "Weight": user[4]}
+        return f"{username} account has not been created"
+    return user
 
 
 # loads webpage displaying food information from the data table
@@ -24,7 +24,12 @@ def get_food():
         food_info = food.get_food(name)
         if (food_info == None):
              return f"{name} does not exist in the foods database"
-        return {"Name": food_info[0], "Calories": food_info[1], "Protein": food_info[2], "Carbs": food_info[3], "Sugars": food_info[4], "Fats": food_info[5]}
+        return food_info
+
+@app.route("/food_table", methods=["GET"])
+def get_all_food():
+     foods = food.get_all_food()
+     return foods
 
 
 if (__name__ == "__main__"):

@@ -42,7 +42,11 @@ def get_user(username):
     values = [username]
     cursor.execute(query, values)
     conn.commit()
-    return cursor.fetchone()
+    user = cursor.fetchone()
+    if (user == None):
+        return None
+    info = {"Username":  user[0], "Password": user[1], "Age": user[2], "Sex": user[3], "Weight": user[4]}
+    return info
 
 def validate_user(user, password):
     """
@@ -67,6 +71,9 @@ def hash_password(password):
     return hashed_password
 
 def change_password(username, password, newPassword):
+    """
+    Changes the password of the user in the database
+    """
     user = get_user(username)
     if (validate_user(user, password) == False):
         return False

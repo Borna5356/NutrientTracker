@@ -6,6 +6,7 @@ conn = psycopg2.connect(host="localhost", dbname="NutrientTracker", user="User",
 cursor = conn.cursor()
 
 def create_food_table():
+    #Creates a table that hold data for food
     query = """
     CREATE TABLE IF NOT EXISTS foods (
     name TEXT PRIMARY KEY,
@@ -22,6 +23,7 @@ def create_food_table():
 
 
 def create_food(name, calories, protein, carbs, sugars, fats):
+    #Adds a food item to the food table
     query = """
     INSERT INTO foods (name, total_calories, protein, carbs, sugars, fats) VALUES
     (%s, %s, %s, %s, %s, %s)
@@ -35,7 +37,14 @@ def get_all_food():
     query = "SELECT * FROM foods"
     cursor.execute(query)
     conn.commit()
-    return cursor.fetchall()
+    foods =  cursor.fetchall()
+    food_list = []
+    for food in foods:
+        food_dict = {"Name": food[0], "Calories": food[1], "Protein": food[2], "Carbs": food[3], "Sugars": food[4], "Fats": food[5]}
+        food_list.append(food_dict)
+    return food_list
+
+
 
 
 def get_food(name):
@@ -46,7 +55,10 @@ def get_food(name):
     values = [name]
     cursor.execute(query, values)
     conn.commit()
-    return cursor.fetchone()
+    food = cursor.fetchone()
+    if (food == None):
+        return None
+    return {"Name": food[0], "Calories": food[1], "Protein": food[2], "Carbs": food[3], "Sugars": food[4], "Fats": food[5]}
 
 def main():
     print(get_all_food())
